@@ -17,7 +17,7 @@ build:
 	go get
 	go build -a -installsuffix cgo -ldflags "-w ${LDFLAGS}" -o $(NAME) ./*.go
 
-docker:
+docker-100iq:
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 	docker tag $(IMAGE_NAME):$(IMAGE_TAG) $(IMAGE_NAME):latest
 	docker push $(IMAGE_NAME):$(IMAGE_TAG)
@@ -33,3 +33,7 @@ clean:
 	rm -rf ./micro
 
 .PHONY: build clean vet test docker
+
+docker-cors:
+	go build -o micro ./main.go ./plugin.go
+	docker build -t micro-cors .
